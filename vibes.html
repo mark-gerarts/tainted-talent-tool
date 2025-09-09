@@ -1,0 +1,94 @@
+<div style="display: flex">
+    <div id="unarmed" style="margin: auto"></div>
+    <div id="twoHanded" style="margin: auto"></div>
+</div>
+
+<script>
+    const unarmed = [
+        { id: "FistsOfFury", dependsOn: [], position: [335, 689] },
+        { id: "BlowsOfTheSnake", dependsOn: ["FistsOfFury"], position: [197, 544] },
+        { id: "Brawler", dependsOn: ["FistsOfFury"], position: [483, 544] },
+        { id: "IronHands", dependsOn: ["Brawler"], position: [381, 544] },
+    ];
+
+    const twoHanded = [
+        { id: "BrutishFighter", dependsOn: [], position: [636, 375] },
+        { id: "MightyBlows", dependsOn: ["BrutishFighter"], position: [556, 304] },
+        { id: "PerpetualSwings", dependsOn: ["MightyBlows"], position: [428, 304] },
+        { id: "FuryWithoutFatigue", dependsOn: ["BrutishFighter"], position: [723, 304] },
+        { id: "EnduringStrikes", dependsOn: ["FuryWithoutFatigue"], position: [842, 304] },
+        { id: "GiantsGrace", dependsOn: ["FuryWithoutFatigue"], position: [786, 224] },
+        { id: "UnstoppableForce", dependsOn: ["BrutishFighter"], position: [636, 303] },
+        { id: "CrushingBlow", dependsOn: ["UnstoppableForce"], position: [520, 181] },
+        { id: "UnstoppableImpact", dependsOn: ["UnstoppableForce"], position: [636, 222] },
+        { id: "DominatingPresence", dependsOn: ["UnstoppableImpact"], position: [715, 138] },
+        { id: "CullingTheHerd", dependsOn: ["UnstoppableImpact"], position: [636, 69] },
+    ]
+
+    function renderGraph(nodes, width = 400, height = 400, padding = 40) {
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", width);
+        svg.setAttribute("height", height);
+        svg.style.border = "1px solid #ccc";
+
+        // Compute bounds
+        const xs = nodes.map(n => n.position[0]);
+        const ys = nodes.map(n => n.position[1]);
+        const minX = Math.min(...xs);
+        const maxX = Math.max(...xs);
+        const minY = Math.min(...ys);
+        const maxY = Math.max(...ys);
+
+        const scaleX = (width - 2 * padding) / (maxX - minX || 1);
+        const scaleY = (height - 2 * padding) / (maxY - minY || 1);
+
+        const lookup = Object.fromEntries(nodes.map(n => [n.id, n]));
+
+        // Helper: transform raw coords -> svg coords
+        const transform = ([x, y]) => [
+            padding + (x - minX) * scaleX,
+            height - padding - (y - minY) * scaleY // flip Y so "up" is bigger
+        ];
+
+        // Draw edges
+        nodes.forEach(node => {
+            node.dependsOn.forEach(depId => {
+                const from = transform(lookup[depId].position);
+                const to = transform(node.position);
+
+                const line = document.createElementNS(svgNS, "line");
+                line.setAttribute("x1", from[0]);
+                line.setAttribute("y1", from[1]);
+                line.setAttribute("x2", to[0]);
+                line.setAttribute("y2", to[1]);
+                line.setAttribute("stroke", "black");
+                svg.appendChild(line);
+            });
+        });
+
+        // Draw nodes + labels
+        nodes.forEach(node => {
+            const [x, y] = transform(node.position);
+
+            const circle = document.createElementNS(svgNS, "circle");
+            circle.setAttribute("cx", x);
+            circle.setAttribute("cy", y);
+            circle.setAttribute("r", 10);
+            circle.setAttribute("fill", "lightblue");
+            svg.appendChild(circle);
+
+            const label = document.createElementNS(svgNS, "text");
+            label.setAttribute("x", x);
+            label.setAttribute("y", y - 15);
+            label.setAttribute("text-anchor", "middle");
+            label.textContent = node.id;
+            svg.appendChild(label);
+        });
+
+        return svg;
+    }
+
+    document.getElementById("unarmed").appendChild(renderGraph(unarmed, 600, 600));
+    document.getElementById("twoHanded").appendChild(renderGraph(twoHanded, 600, 600));
+</script>
