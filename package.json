@@ -1,0 +1,26 @@
+{
+  "name": "tainted-talent-tool",
+  "version": "0.0.1",
+  "description": "Tainted Grail: Fall of Avalon talent tree calculator",
+  "homepage": "https://github.com/mark-gerarts/tainted-talent-tool#readme",
+  "bugs": {
+    "url": "https://github.com/mark-gerarts/tainted-talent-tool/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mark-gerarts/tainted-talent-tool.git"
+  },
+  "license": "MIT",
+  "author": "Mark Gerarts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.9"
+  },
+  "devDependencies": {
+    "vite": "^7.1.4"
+  }
+}
