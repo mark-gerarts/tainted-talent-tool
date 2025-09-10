@@ -7,8 +7,20 @@
     <title>Tainted Talent Tool</title>
 </head>
 
-<body>
-    <div id="app"></div>
+<body x-data="app()">
+    <nav>
+        <template x-for="section in data.sections">
+            <button @click="setActiveSection(section.id)" x-text="section.name"></button>
+        </template>
+    </nav>
+
+    <div>
+        Selected <span x-text="activeSection.name"></span>
+    </div>
+
+    <template x-for="skillTree in activeSection.skillTrees">
+        <include src="partial/skill-tree.html"></include>
+    </template>
     <script type="module" src="/src/main.js"></script>
 </body>
 
