@@ -1,0 +1,28 @@
+body {
+    max-width: 1200px;
+    margin: 10px auto;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+button.selected {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.skilltree-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+svg circle:hover {
+    cursor: pointer
+}

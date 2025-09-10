@@ -4,23 +4,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:,">
     <title>Tainted Talent Tool</title>
 </head>
 
 <body x-data="app()">
     <nav>
         <template x-for="section in data.sections">
-            <button @click="setActiveSection(section.id)" x-text="section.name"></button>
+            <button @click="setActiveSection(section.id)" x-text="section.name"
+                :class="{ 'selected': section.id === activeSection.id }">
+            </button>
         </template>
     </nav>
 
-    <div>
-        Selected <span x-text="activeSection.name"></span>
+    <div class="skilltree-wrapper">
+        <template x-for="skillTree in activeSection.skillTrees">
+            <div>
+                <h2 x-text="skillTree.name" class="text-center"></h2>
+                <div x-html="renderSkillTreeToHtml(skillTree)"></div>
+            </div>
+        </template>
     </div>
 
-    <template x-for="skillTree in activeSection.skillTrees">
-        <include src="partial/skill-tree.html"></include>
+    <template x-if="selectedSkill">
+        <p x-text="selectedSkill.name">
+        </p>
     </template>
+
     <script type="module" src="/src/main.js"></script>
 </body>
 
