@@ -12,10 +12,25 @@ export default () => ({
   init() {
     // TODO: from url etc etc.
     const urlState = fetchStateFromUrl();
-    console.log(urlState);
     if (urlState) {
       this.learnedSkills = urlState.learnedSkills;
     }
+  },
+
+  get selectedSkillDescription() {
+    const currentRank = this.learnedSkills[this.selectedSkill.id];
+    if (!currentRank) {
+      return [this.selectedSkill.ranks[0], null];
+    }
+
+    const currentDescription = this.selectedSkill.ranks[currentRank - 1];
+    if (currentRank >= this.selectedSkill.ranks.length) {
+      return [currentDescription, null];
+    }
+
+    const nextDescription = this.selectedSkill.ranks[currentRank];
+
+    return [currentDescription, nextDescription];
   },
 
   selectSection(sectionId) {
@@ -81,10 +96,9 @@ export default () => ({
 
     if (this.learnedSkills[skillId] === 1) {
       this.unlearnSkill(skillId);
-      return;
+    } else {
+      this.learnedSkills[skillId]--;
     }
-
-    this.learnedSkills[skillId]--;
 
     saveStateToUrl(this.learnedSkills);
   },

@@ -110,7 +110,7 @@ button.selected {
     min-height: 100px;
 }
 
-svg circle:hover {
+svg .main-skill-node:hover {
     cursor: pointer
 }
 

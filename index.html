@@ -43,7 +43,10 @@
                             <span x-text="selectedSkill.name"></span>
                             <span x-text="learnedSkills[selectedSkill.id] || 0"></span>/<span x-text="selectedSkill.ranks.length"></span>
                         </h4>
-                        <p x-text="selectedSkill.ranks[0]"></p>
+                        <p x-text="selectedSkillDescription[0]"></p>
+                        <template x-if="selectedSkillDescription[1]">
+                            <p>Next rank: <span x-text="selectedSkillDescription[1]"></span></p>
+                        </template>
                     </div>
                 </template>
             </div>

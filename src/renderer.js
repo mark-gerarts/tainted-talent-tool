@@ -74,6 +74,7 @@ export const renderSkillTreeSvg = (
     circle.setAttribute("cx", x);
     circle.setAttribute("cy", y);
     circle.setAttribute("r", 3);
+    circle.setAttribute("class", "main-skill-node");
 
     if (learnedSkills[node.id]) {
       circle.setAttribute("fill", "var(--color-primary)");
