@@ -11,15 +11,15 @@
 <body x-data="app()">
     <nav>
         <template x-for="section in data.sections">
-            <button @click="setActiveSection(section.id)" x-text="section.name"
-                :class="{ 'selected': section.id === activeSection.id }">
+            <button @click="selectSection(section.id)" x-text="section.name"
+                :class="{ 'selected': section.id === selectedSection.id }">
             </button>
         </template>
     </nav>
 
     <div class="main-skilltree-window">
         <div class="skilltree-selection">
-            <template x-for="skillTree in activeSection.skillTrees">
+            <template x-for="skillTree in selectedSection.skillTrees">
                 <div class="text-center skilltree-selector" :class="(selectedSkillTree.id===skillTree.id) && 'selected'"
                     @click="selectSkillTree(skillTree)">
                     <span x-text="skillTree.name"></span>
@@ -30,8 +30,7 @@
         <div class="active-skilltree">
             <h2 x-text="selectedSkillTree.name" class="active-skilltree-title text-center"></h2>
             <div x-html="renderSkillTreeToHtml(selectedSkillTree,
-            learnedSkills)"
-                class="active-skilltree-svg text-center"></div>
+            learnedSkills)" class="active-skilltree-svg text-center"></div>
             <div class="active-skilltree-subtext">
                 <template x-if="selectedSkill">
                     <p x-text="selectedSkill.name" class="selected-skill text-center"></p>

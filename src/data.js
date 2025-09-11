@@ -24,7 +24,7 @@ export default {
             { id: "furyWithoutFatigue", name: "Fury Without Fatigue", dependsOn: ["brutishFighter"], position: { x: 723, y: 304 } },
             { id: "enduringStrikes", name: "Enduring Strikes", dependsOn: ["furyWithoutFatigue"], position: { x: 842, y: 304 } },
             { id: "giantsGrace", name: "Giant's Grace", dependsOn: ["furyWithoutFatigue"], position: { x: 786, y: 224 } },
-            { id: "unstoppableForce", name: "Unstoppable Force", dependsOn: ["brutishFighter"], position: { x: 636, y: 303 } },
+            { id: "unstoppableForce", name: "Unstoppable Force", dependsOn: ["brutishFighter"], position: { x: 636, y: 304 } },
             { id: "crushingBlow", name: "Crushing Blow", dependsOn: ["unstoppableForce"], position: { x: 520, y: 181 } },
             { id: "unstoppableImpact", name: "Unstoppable Impact", dependsOn: ["unstoppableForce"], position: { x: 636, y: 222 } },
             { id: "dominatingPresence", name: "Dominating Presence", dependsOn: ["unstoppableImpact"], position: { x: 715, y: 138 } },
@@ -66,7 +66,15 @@ export default {
     {
       id: "endurance",
       name: "Endurance",
-      skillTrees: []
+      skillTrees: [
+        {
+          id: "shields",
+          name: "Shields",
+          skills: [
+            { id: "counterweight", name: "Counterweight", dependsOn: [], position: { x: 0, y: 0 } },
+          ]
+        }
+      ]
     },
     {
       id: "dexterity",
@@ -95,23 +103,33 @@ export default {
   },
 
   getSkillTree(id) {
-    for (const section of this.sections) {
-      for (const skillTree of section.skillTrees) {
-        if (skillTree.id === id) {
-          return skillTree;
-        }
+    for (const skillTree of this.allSkillTrees()) {
+      if (skillTree.id === id) {
+        return skillTree;
       }
     }
   },
 
   getSkill(id) {
+    for (const skill of this.allSkills()) {
+      if (skill.id === id) {
+        return skill;
+      }
+    }
+  },
+
+  *allSkillTrees() {
     for (const section of this.sections) {
       for (const skillTree of section.skillTrees) {
-        for (const skill of skillTree.skills) {
-          if (skill.id === id) {
-            return skill;
-          }
-        }
+        yield skillTree;
+      }
+    }
+  },
+
+  *allSkills() {
+    for (const skillTree of this.allSkillTrees()) {
+      for (const skill of skillTree.skills) {
+        yield skill;
       }
     }
   }

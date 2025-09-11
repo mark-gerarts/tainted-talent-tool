@@ -79,7 +79,7 @@ export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = 
     if (interactive) {
       circle.setAttribute("x-on:mouseenter", `selectSkill('${node.id}')`);
       circle.setAttribute("x-on:mouseleave", `selectSkill(null)`);
-      circle.setAttribute("x-on:click", `learnSkill('${node.id}')`);
+      circle.setAttribute("x-on:click", `toggleSkill('${node.id}')`);
     }
 
     svg.appendChild(circle);

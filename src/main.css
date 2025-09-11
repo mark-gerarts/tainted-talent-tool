@@ -17,8 +17,27 @@ body {
 nav {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 24px;
     margin-bottom: 24px;
+}
+
+nav button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: var(--color-unselected);
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+nav button.selected {
+    color: var(--color-primary);
+}
+
+nav button:hover {
+    cursor: pointer;
 }
 
 svg {

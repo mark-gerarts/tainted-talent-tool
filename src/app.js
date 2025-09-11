@@ -3,7 +3,7 @@ import { renderSkillTreeSvg } from './renderer';
 
 export default () => ({
   data,
-  activeSection: data.sections[0],
+  selectedSection: data.sections[0],
   selectedSkillTree: data.sections[0].skillTrees[0],
   selectedSkill: null,
   learnedSkills: [],
@@ -12,12 +12,12 @@ export default () => ({
     // TODO: from url etc etc.
   },
 
-  setActiveSection(sectionId) {
-    this.activeSection = data.getSection(sectionId);
+  selectSection(sectionId) {
+    this.selectedSection = data.getSection(sectionId);
   },
 
-  renderSkillTreeToHtml(skillTree, interactive) {
-    return renderSkillTreeSvg(skillTree, interactive).outerHTML;
+  renderSkillTreeToHtml(skillTree, learnedSkills, interactive) {
+    return renderSkillTreeSvg(skillTree, learnedSkills, interactive).outerHTML;
   },
 
   selectSkillTree(skillTree) {
@@ -29,11 +29,30 @@ export default () => ({
   },
 
   learnSkill(skillId) {
-    if (!this.learnedSkills.includes(skillId)) {
-      this.learnedSkills.push(skillId);
+    if (this.learnedSkills.includes(skillId)) {
+      return;
+    }
+
+    this.learnedSkills.push(skillId);
+    data.getSkill(skillId).dependsOn.forEach((id) => this.learnSkill(id));
+  },
+
+  unlearnSkill(skillId) {
+    this.learnedSkills = this.learnedSkills.filter(id => id !== skillId);
+
+    for (const skill of data.allSkills()) {
+      if (skill.dependsOn.includes(skillId)) {
+        this.unlearnSkill(skill.id);
+      }
+    }
+  },
+
+  toggleSkill(skillId) {
+    if (this.learnedSkills.includes(skillId)) {
+      this.unlearnSkill(skillId);
     }
     else {
-      this.learnedSkills = this.learnedSkills.filter(id => id !== skillId);
+      this.learnSkill(skillId);
     }
   }
 });
