@@ -10,7 +10,7 @@
  * a viewbox.
  */
 
-export const renderSkillTreeSvg = (skillTree, interactive = true, width = 100, height = 100, padding = 10) => {
+export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = true, width = 100, height = 100, padding = 10) => {
   const nodes = skillTree.skills;
 
   const svgNS = "http://www.w3.org/2000/svg";
@@ -47,8 +47,15 @@ export const renderSkillTreeSvg = (skillTree, interactive = true, width = 100, h
       line.setAttribute("y1", from.y);
       line.setAttribute("x2", to.x);
       line.setAttribute("y2", to.y);
-      line.setAttribute("stroke", "#A1A1A1");
       line.setAttribute("stroke-width", "0.3");
+
+      if (learnedSkills.includes(node.id)) {
+        line.setAttribute("stroke", "var(--color-primary)");
+      }
+      else {
+        line.setAttribute("stroke", "var(--color-unselected)");
+      }
+
       svg.appendChild(line);
     });
   });
@@ -61,12 +68,18 @@ export const renderSkillTreeSvg = (skillTree, interactive = true, width = 100, h
     circle.setAttribute("cx", x);
     circle.setAttribute("cy", y);
     circle.setAttribute("r", 3);
-    circle.setAttribute("fill", "#A1A1A1");
+
+    if (learnedSkills.includes(node.id)) {
+      circle.setAttribute("fill", "var(--color-primary)")
+    }
+    else {
+      circle.setAttribute("fill", "var(--color-unselected)");
+    }
 
     if (interactive) {
       circle.setAttribute("x-on:mouseenter", `selectSkill('${node.id}')`);
       circle.setAttribute("x-on:mouseleave", `selectSkill(null)`);
-      circle.setAttribute("x-on:click", `selectSkill('${node.id}')`);
+      circle.setAttribute("x-on:click", `learnSkill('${node.id}')`);
     }
 
     svg.appendChild(circle);

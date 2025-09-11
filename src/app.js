@@ -29,6 +29,11 @@ export default () => ({
   },
 
   learnSkill(skillId) {
-
+    if (!this.learnedSkills.includes(skillId)) {
+      this.learnedSkills.push(skillId);
+    }
+    else {
+      this.learnedSkills = this.learnedSkills.filter(id => id !== skillId);
+    }
   }
 });

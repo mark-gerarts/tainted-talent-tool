@@ -23,13 +23,15 @@
                 <div class="text-center skilltree-selector" :class="(selectedSkillTree.id===skillTree.id) && 'selected'"
                     @click="selectSkillTree(skillTree)">
                     <span x-text="skillTree.name"></span>
-                    <div x-html="renderSkillTreeToHtml(skillTree, false)"></div>
+                    <div x-html="renderSkillTreeToHtml(skillTree, learnedSkills, false)"></div>
                 </div>
             </template>
         </div>
         <div class="active-skilltree">
             <h2 x-text="selectedSkillTree.name" class="active-skilltree-title text-center"></h2>
-            <div x-html="renderSkillTreeToHtml(selectedSkillTree)" class="active-skilltree-svg text-center"></div>
+            <div x-html="renderSkillTreeToHtml(selectedSkillTree,
+            learnedSkills)"
+                class="active-skilltree-svg text-center"></div>
             <div class="active-skilltree-subtext">
                 <template x-if="selectedSkill">
                     <p x-text="selectedSkill.name" class="selected-skill text-center"></p>

@@ -1,4 +1,4 @@
-import Alpine from 'alpinejs'
+import Alpine from 'alpinejs';
 import app from './app';
 import './main.css';
 
