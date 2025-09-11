@@ -1,5 +1,6 @@
 import data from "./data";
 import { renderSkillTreeSvg } from "./renderer";
+import { saveStateToUrl, fetchStateFromUrl } from "./url";
 
 export default () => ({
   data,
@@ -10,6 +11,11 @@ export default () => ({
 
   init() {
     // TODO: from url etc etc.
+    const urlState = fetchStateFromUrl();
+    console.log(urlState);
+    if (urlState) {
+      this.learnedSkills = urlState.learnedSkills;
+    }
   },
 
   selectSection(sectionId) {
@@ -64,6 +70,8 @@ export default () => ({
       // Max skill -> unlearn all.
       this.unlearnSkill(skillId);
     }
+
+    saveStateToUrl(this.learnedSkills);
   },
 
   decrementSkill(skillId) {
@@ -77,6 +85,8 @@ export default () => ({
     }
 
     this.learnedSkills[skillId]--;
+
+    saveStateToUrl(this.learnedSkills);
   },
 
   learnedSkillCountForSkillTree(skillTree) {
