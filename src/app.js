@@ -1,5 +1,5 @@
-import data from './data';
-import { renderSkillTreeSvg } from './renderer';
+import data from "./data";
+import { renderSkillTreeSvg } from "./renderer";
 
 export default () => ({
   data,
@@ -38,7 +38,7 @@ export default () => ({
   },
 
   unlearnSkill(skillId) {
-    this.learnedSkills = this.learnedSkills.filter(id => id !== skillId);
+    this.learnedSkills = this.learnedSkills.filter((id) => id !== skillId);
 
     for (const skill of data.allSkills()) {
       if (skill.dependsOn.includes(skillId)) {
@@ -50,9 +50,8 @@ export default () => ({
   toggleSkill(skillId) {
     if (this.learnedSkills.includes(skillId)) {
       this.unlearnSkill(skillId);
-    }
-    else {
+    } else {
       this.learnSkill(skillId);
     }
-  }
+  },
 });

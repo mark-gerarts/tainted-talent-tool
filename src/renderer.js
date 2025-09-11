@@ -10,7 +10,14 @@
  * a viewbox.
  */
 
-export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = true, width = 100, height = 100, padding = 10) => {
+export const renderSkillTreeSvg = (
+  skillTree,
+  learnedSkills = [],
+  interactive = true,
+  width = 100,
+  height = 100,
+  padding = 10
+) => {
   const nodes = skillTree.skills;
 
   const svgNS = "http://www.w3.org/2000/svg";
@@ -18,8 +25,8 @@ export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = 
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
 
   // Compute bounds
-  const xs = nodes.map(n => n.position.x);
-  const ys = nodes.map(n => n.position.y);
+  const xs = nodes.map((n) => n.position.x);
+  const ys = nodes.map((n) => n.position.y);
   const minX = Math.min(...xs);
   const maxX = Math.max(...xs);
   const minY = Math.min(...ys);
@@ -28,17 +35,17 @@ export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = 
   const scaleX = (width - 2 * padding) / (maxX - minX || 1);
   const scaleY = (height - 2 * padding) / (maxY - minY || 1);
 
-  const lookup = Object.fromEntries(nodes.map(n => [n.id, n]));
+  const lookup = Object.fromEntries(nodes.map((n) => [n.id, n]));
 
   // Helper: transform raw coords -> svg coords
   const transform = ({ x, y }) => ({
     x: padding + (x - minX) * scaleX,
-    y: height - padding - (y - minY) * scaleY // flip Y so "up" is bigger
+    y: height - padding - (y - minY) * scaleY, // flip Y so "up" is bigger
   });
 
   // Draw edges
-  nodes.forEach(node => {
-    node.dependsOn.forEach(depId => {
+  nodes.forEach((node) => {
+    node.dependsOn.forEach((depId) => {
       const from = transform(lookup[depId].position);
       const to = transform(node.position);
 
@@ -51,8 +58,7 @@ export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = 
 
       if (learnedSkills.includes(node.id)) {
         line.setAttribute("stroke", "var(--color-primary)");
-      }
-      else {
+      } else {
         line.setAttribute("stroke", "var(--color-unselected)");
       }
 
@@ -61,7 +67,7 @@ export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = 
   });
 
   // Draw nodes + labels
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     const { x, y } = transform(node.position);
 
     const circle = document.createElementNS(svgNS, "circle");
@@ -70,9 +76,8 @@ export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = 
     circle.setAttribute("r", 3);
 
     if (learnedSkills.includes(node.id)) {
-      circle.setAttribute("fill", "var(--color-primary)")
-    }
-    else {
+      circle.setAttribute("fill", "var(--color-primary)");
+    } else {
       circle.setAttribute("fill", "var(--color-unselected)");
     }
 
@@ -94,4 +99,4 @@ export const renderSkillTreeSvg = (skillTree, learnedSkills = [], interactive = 
   });
 
   return svg;
-}
+};
