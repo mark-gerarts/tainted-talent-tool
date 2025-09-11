@@ -33,6 +33,10 @@ export default () => ({
     return [currentDescription, nextDescription];
   },
 
+  get requiredLevel() {
+    return Object.keys(this.learnedSkills).length + 1;
+  },
+
   selectSection(sectionId) {
     this.selectedSection = data.getSection(sectionId);
   },
@@ -144,5 +148,10 @@ export default () => ({
     }
 
     return count;
+  },
+
+  clearAllSkills() {
+    this.learnedSkills = {};
+    saveStateToUrl(this.learnedSkills);
   },
 });

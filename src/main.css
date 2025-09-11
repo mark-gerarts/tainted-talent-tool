@@ -8,17 +8,19 @@ body {
     width: 800px;
     margin: 0 auto;
     height: 100vh;
-    padding: 20px;
     background: linear-gradient(60deg, black 0%, #2F2F30 40%);
     color: var(--color-unselected);
     font-family: Arial, helvetica, sans;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 nav {
     display: flex;
     justify-content: center;
     gap: 24px;
-    margin-bottom: 24px;
+    padding: 24px 0;
 }
 
 nav button {
@@ -38,6 +40,16 @@ nav button.selected {
 
 nav button:hover {
     cursor: pointer;
+}
+
+footer {
+    margin-top: auto;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+footer a {
+    color: inherit;
 }
 
 svg {
@@ -105,9 +117,25 @@ button.selected {
     height: 100%;
 }
 
+.active-skilltree-title {
+    margin: 0
+}
+
+.active-skilltree-level {
+    margin: 0;
+}
+
 .active-skilltree-subtext {
     flex-grow: 1;
     min-height: 100px;
+}
+
+.clear-all {
+    text-decoration: underline;
+}
+
+.clear-all:hover {
+    cursor: pointer;
 }
 
 svg .main-skill-node:hover {
