@@ -38,16 +38,22 @@ export default () => ({
     }
   },
 
-  incrementSkill(skillId) {
+  descendLearnSkill(skill) {
+    for (const dependeeId of skill.dependsOn) {
+      if (!this.learnedSkills[dependeeId]) {
+        this.learnedSkills[dependeeId] = 1;
+        this.descendLearnSkill(data.getSkill(dependeeId));
+      }
+    }
+  },
+
+  incrementSkill(skillId, descending = false) {
     const skill = data.getSkill(skillId);
 
     // Not learned at all.
     if (!this.learnedSkills[skillId]) {
       this.learnedSkills[skillId] = 1;
-
-      for (const dependendeeId of skill.dependsOn) {
-        this.incrementSkill(dependendeeId);
-      }
+      this.descendLearnSkill(skill);
     }
     // Within rank bounds.
     else if (this.learnedSkills[skillId] < skill.ranks.length) {
@@ -71,5 +77,48 @@ export default () => ({
     }
 
     this.learnedSkills[skillId]--;
+  },
+
+  learnedSkillCountForSkillTree(skillTree) {
+    let count = 0;
+    const skillIds = skillTree.skills.map((s) => s.id);
+
+    for (const skillId of Object.keys(this.learnedSkills)) {
+      if (skillIds.includes(skillId)) {
+        count += this.learnedSkills[skillId];
+      }
+    }
+
+    return count;
+  },
+
+  learnableSkillCountForSKillTree(skillTree) {
+    let count = 0;
+
+    for (const skill of skillTree.skills) {
+      count += skill.ranks.length;
+    }
+
+    return count;
+  },
+
+  learnedSkillCountForSection(section) {
+    let count = 0;
+
+    for (const skillTree of section.skillTrees) {
+      count += this.learnedSkillCountForSkillTree(skillTree);
+    }
+
+    return count;
+  },
+
+  learnableSkillCountForSection(section) {
+    let count = 0;
+
+    for (const skillTree of section.skillTrees) {
+      count += this.learnableSkillCountForSKillTree(skillTree);
+    }
+
+    return count;
   },
 });

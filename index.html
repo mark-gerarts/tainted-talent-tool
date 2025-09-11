@@ -11,8 +11,10 @@
 <body x-data="app()">
     <nav>
         <template x-for="section in data.sections">
-            <button @click="selectSection(section.id)" x-text="section.name"
+            <button @click="selectSection(section.id)"
                 :class="{ 'selected': section.id === selectedSection.id }">
+                <span x-text="section.name"></span>
+                <span x-text="learnedSkillCountForSection(section)"></span>/<span x-text="learnableSkillCountForSection(section)"></span>
             </button>
         </template>
     </nav>
@@ -22,7 +24,10 @@
             <template x-for="skillTree in selectedSection.skillTrees">
                 <div class="text-center skilltree-selector" :class="(selectedSkillTree.id===skillTree.id) && 'selected'"
                     @click="selectSkillTree(skillTree)">
-                    <span x-text="skillTree.name"></span>
+                    <span>
+                        <span x-text="skillTree.name"></span>
+                        <span x-text="learnedSkillCountForSkillTree(skillTree)"></span>/<span x-text="learnableSkillCountForSKillTree(skillTree)"></span>
+                    </span>
                     <div x-html="renderSkillTreeToHtml(skillTree, learnedSkills, false)"></div>
                 </div>
             </template>
