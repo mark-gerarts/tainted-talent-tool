@@ -6,6 +6,7 @@ export default () => ({
   activeSection: data.sections[0],
   selectedSkillTree: data.sections[0].skillTrees[0],
   selectedSkill: null,
+  learnedSkills: [],
 
   init() {
     // TODO: from url etc etc.
@@ -24,14 +25,10 @@ export default () => ({
   },
 
   selectSkill(skillId) {
-    // Because the skills are rendered manually, we need to search manually as
-    // well.
-    for (const skillTree of this.activeSection.skillTrees) {
-      for (const skill of skillTree.skills) {
-        if (skill.id === skillId) {
-          this.selectedSkill = skill;
-        }
-      }
-    }
+    this.selectedSkill = data.getSkill(skillId);
+  },
+
+  learnSkill(skillId) {
+
   }
 });

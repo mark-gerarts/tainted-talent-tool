@@ -47,8 +47,8 @@ export const renderSkillTreeSvg = (skillTree, interactive = true, width = 100, h
       line.setAttribute("y1", from.y);
       line.setAttribute("x2", to.x);
       line.setAttribute("y2", to.y);
-      line.setAttribute("stroke", "black");
-      line.setAttribute("stroke-width", "0.5");
+      line.setAttribute("stroke", "#A1A1A1");
+      line.setAttribute("stroke-width", "0.3");
       svg.appendChild(line);
     });
   });
@@ -60,8 +60,8 @@ export const renderSkillTreeSvg = (skillTree, interactive = true, width = 100, h
     const circle = document.createElementNS(svgNS, "circle");
     circle.setAttribute("cx", x);
     circle.setAttribute("cy", y);
-    circle.setAttribute("r", 4);
-    circle.setAttribute("fill", "lightblue");
+    circle.setAttribute("r", 3);
+    circle.setAttribute("fill", "#A1A1A1");
 
     if (interactive) {
       circle.setAttribute("x-on:mouseenter", `selectSkill('${node.id}')`);

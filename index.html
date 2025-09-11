@@ -30,9 +30,11 @@
         <div class="active-skilltree">
             <h2 x-text="selectedSkillTree.name" class="active-skilltree-title text-center"></h2>
             <div x-html="renderSkillTreeToHtml(selectedSkillTree)" class="active-skilltree-svg text-center"></div>
-            <template x-if="selectedSkill">
-                <p x-text="selectedSkill.name" class="selected-skill text-center"></p>
-            </template>
+            <div class="active-skilltree-subtext">
+                <template x-if="selectedSkill">
+                    <p x-text="selectedSkill.name" class="selected-skill text-center"></p>
+                </template>
+            </div>
         </div>
     </div>
 

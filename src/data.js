@@ -92,5 +92,27 @@ export default {
 
   getSection(id) {
     return this.sections.find(section => section.id === id);
+  },
+
+  getSkillTree(id) {
+    for (const section of this.sections) {
+      for (const skillTree of section.skillTrees) {
+        if (skillTree.id === id) {
+          return skillTree;
+        }
+      }
+    }
+  },
+
+  getSkill(id) {
+    for (const section of this.sections) {
+      for (const skillTree of section.skillTrees) {
+        for (const skill of skillTree.skills) {
+          if (skill.id === id) {
+            return skill;
+          }
+        }
+      }
+    }
   }
 };
