@@ -10,14 +10,12 @@
  * a viewbox.
  */
 
-export const renderSkillTreeSvg = (skillTree, width = 400, height = 400, padding = 40) => {
+export const renderSkillTreeSvg = (skillTree, interactive = true, width = 100, height = 100, padding = 10) => {
   const nodes = skillTree.skills;
 
   const svgNS = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(svgNS, "svg");
-  svg.setAttribute("width", width);
-  svg.setAttribute("height", height);
-  svg.style.border = "1px solid #ccc";
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
 
   // Compute bounds
   const xs = nodes.map(n => n.position.x);
@@ -50,6 +48,7 @@ export const renderSkillTreeSvg = (skillTree, width = 400, height = 400, padding
       line.setAttribute("x2", to.x);
       line.setAttribute("y2", to.y);
       line.setAttribute("stroke", "black");
+      line.setAttribute("stroke-width", "0.5");
       svg.appendChild(line);
     });
   });
@@ -61,11 +60,15 @@ export const renderSkillTreeSvg = (skillTree, width = 400, height = 400, padding
     const circle = document.createElementNS(svgNS, "circle");
     circle.setAttribute("cx", x);
     circle.setAttribute("cy", y);
-    circle.setAttribute("r", 10);
+    circle.setAttribute("r", 4);
     circle.setAttribute("fill", "lightblue");
-    circle.setAttribute("x-on:mouseenter", `setSelectedSkill('${node.id}')`);
-    circle.setAttribute("x-on:mouseleave", `setSelectedSkill(null)`);
-    circle.setAttribute("x-on:click", `setSelectedSkill('${node.id}')`);
+
+    if (interactive) {
+      circle.setAttribute("x-on:mouseenter", `selectSkill('${node.id}')`);
+      circle.setAttribute("x-on:mouseleave", `selectSkill(null)`);
+      circle.setAttribute("x-on:click", `selectSkill('${node.id}')`);
+    }
+
     svg.appendChild(circle);
 
     // TODO: inspiration for the levels of a skill.

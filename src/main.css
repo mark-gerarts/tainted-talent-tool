@@ -1,5 +1,5 @@
 body {
-    max-width: 1200px;
+    width: 800px;
     margin: 10px auto;
 }
 
@@ -10,6 +10,10 @@ nav {
     margin-bottom: 24px;
 }
 
+svg {
+    display: inline-block;
+}
+
 button.selected {
     font-weight: bold;
 }
@@ -18,9 +22,60 @@ button.selected {
     text-align: center;
 }
 
-.skilltree-wrapper {
+.main-skilltree-window {
     display: flex;
+    gap: 10px;
+}
+
+.skilltree-selection {
+    flex-grow: 1;
+    flex-basis: 0;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+.skilltree-selector.selected {
+    background: gray;
+}
+
+.skilltree-selection svg {
+    max-width: 100px;
+}
+
+.skilltree-selector {
+    border: 1px solid gray;
+    padding: 4px;
+}
+
+.skilltree-selector:hover {
+    cursor: pointer;
+    background: gray;
+}
+
+.active-skilltree {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.active-skilltree-title {
+    flex-grow: 1;
+}
+
+.active-skilltree-svg {
+    flex-grow: 3;
+}
+
+.active-skilltree svg {
+    max-height: 60vh;
+}
+
+.selected-skill {
+    flex-grow: 1;
 }
 
 svg circle:hover {

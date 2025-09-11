@@ -67,6 +67,26 @@ export default {
       id: "endurance",
       name: "Endurance",
       skillTrees: []
+    },
+    {
+      id: "dexterity",
+      name: "Dexterity",
+      skillTrees: []
+    },
+    {
+      id: "spirituality",
+      name: "Spirituality",
+      skillTrees: []
+    },
+    {
+      id: "perception",
+      name: "Perception",
+      skillTrees: []
+    },
+    {
+      id: "practicality",
+      name: "Practicality",
+      skillTrees: []
     }
   ],
 
