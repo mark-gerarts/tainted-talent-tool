@@ -93,6 +93,32 @@ export const renderSkillTreeSvg = (
 
     svg.appendChild(circle);
 
+    const rankPositions = [
+      [5, -2.1],
+      [5, 0],
+      [5, 2.1],
+      [7.1, -2.1],
+      [7.1, 0],
+    ];
+
+    if (node.ranks.length > 1 && interactive) {
+      for (let i = 0; i < node.ranks.length; i++) {
+        const fill =
+          i < learnedSkills[node.id]
+            ? "var(--color-primary)"
+            : "var(--color-unselected)";
+
+        const [xInc, yInc] = rankPositions[i];
+
+        const rank = document.createElementNS(svgNS, "circle");
+        rank.setAttribute("cx", x + xInc);
+        rank.setAttribute("cy", y + yInc);
+        rank.setAttribute("r", 1);
+        rank.setAttribute("fill", fill);
+        svg.appendChild(rank);
+      }
+    }
+
     // TODO: inspiration for the levels of a skill.
     const label = document.createElementNS(svgNS, "text");
     label.setAttribute("x", x);
