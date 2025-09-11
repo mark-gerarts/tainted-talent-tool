@@ -33,7 +33,13 @@
             learnedSkills)" class="active-skilltree-svg text-center"></div>
             <div class="active-skilltree-subtext">
                 <template x-if="selectedSkill">
-                    <p x-text="selectedSkill.name" class="selected-skill text-center"></p>
+                    <div class="selected-skill text-center">
+                        <h4>
+                            <span x-text="selectedSkill.name"></span>
+                            <span x-text="learnedSkills[selectedSkill.id] || 0"></span>/<span x-text="selectedSkill.ranks.length"></span>
+                        </h4>
+                        <p x-text="selectedSkill.ranks[0]"></p>
+                    </div>
                 </template>
             </div>
         </div>

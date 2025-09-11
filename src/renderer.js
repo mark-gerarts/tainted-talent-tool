@@ -56,7 +56,7 @@ export const renderSkillTreeSvg = (
       line.setAttribute("y2", to.y);
       line.setAttribute("stroke-width", "0.3");
 
-      if (learnedSkills.includes(node.id)) {
+      if (learnedSkills[node.id]) {
         line.setAttribute("stroke", "var(--color-primary)");
       } else {
         line.setAttribute("stroke", "var(--color-unselected)");
@@ -75,7 +75,7 @@ export const renderSkillTreeSvg = (
     circle.setAttribute("cy", y);
     circle.setAttribute("r", 3);
 
-    if (learnedSkills.includes(node.id)) {
+    if (learnedSkills[node.id]) {
       circle.setAttribute("fill", "var(--color-primary)");
     } else {
       circle.setAttribute("fill", "var(--color-unselected)");
@@ -84,7 +84,11 @@ export const renderSkillTreeSvg = (
     if (interactive) {
       circle.setAttribute("x-on:mouseenter", `selectSkill('${node.id}')`);
       circle.setAttribute("x-on:mouseleave", `selectSkill(null)`);
-      circle.setAttribute("x-on:click", `toggleSkill('${node.id}')`);
+      circle.setAttribute("x-on:click", `incrementSkill('${node.id}')`);
+      circle.setAttribute(
+        "x-on:contextmenu.prevent",
+        `decrementSkill('${node.id}')`
+      );
     }
 
     svg.appendChild(circle);

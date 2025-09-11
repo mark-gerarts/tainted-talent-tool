@@ -6,7 +6,7 @@ export default () => ({
   selectedSection: data.sections[0],
   selectedSkillTree: data.sections[0].skillTrees[0],
   selectedSkill: null,
-  learnedSkills: [],
+  learnedSkills: {},
 
   init() {
     // TODO: from url etc etc.
@@ -28,17 +28,8 @@ export default () => ({
     this.selectedSkill = data.getSkill(skillId);
   },
 
-  learnSkill(skillId) {
-    if (this.learnedSkills.includes(skillId)) {
-      return;
-    }
-
-    this.learnedSkills.push(skillId);
-    data.getSkill(skillId).dependsOn.forEach((id) => this.learnSkill(id));
-  },
-
   unlearnSkill(skillId) {
-    this.learnedSkills = this.learnedSkills.filter((id) => id !== skillId);
+    delete this.learnedSkills[skillId];
 
     for (const skill of data.allSkills()) {
       if (skill.dependsOn.includes(skillId)) {
@@ -47,11 +38,38 @@ export default () => ({
     }
   },
 
-  toggleSkill(skillId) {
-    if (this.learnedSkills.includes(skillId)) {
-      this.unlearnSkill(skillId);
-    } else {
-      this.learnSkill(skillId);
+  incrementSkill(skillId) {
+    const skill = data.getSkill(skillId);
+
+    // Not learned at all.
+    if (!this.learnedSkills[skillId]) {
+      this.learnedSkills[skillId] = 1;
+
+      for (const dependendeeId of skill.dependsOn) {
+        this.incrementSkill(dependendeeId);
+      }
     }
+    // Within rank bounds.
+    else if (this.learnedSkills[skillId] < skill.ranks.length) {
+      this.learnedSkills[skillId]++;
+    }
+    // At max; wrap around unlearn all.
+    else {
+      // Max skill -> unlearn all.
+      this.unlearnSkill(skillId);
+    }
+  },
+
+  decrementSkill(skillId) {
+    if (!this.learnedSkills[skillId]) {
+      return;
+    }
+
+    if (this.learnedSkills[skillId] === 1) {
+      this.unlearnSkill(skillId);
+      return;
+    }
+
+    this.learnedSkills[skillId]--;
   },
 });

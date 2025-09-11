@@ -90,6 +90,7 @@ button.selected {
 
 .active-skilltree {
     flex-grow: 1;
+    flex-basis: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -111,4 +112,14 @@ button.selected {
 
 svg circle:hover {
     cursor: pointer
+}
+
+.selected-skill h4 {
+    padding: 0;
+    margin: 0;
+}
+
+.selected-skill p {
+    padding: 0;
+    margin: 0;
 }
