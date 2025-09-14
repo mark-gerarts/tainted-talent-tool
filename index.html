@@ -13,7 +13,7 @@
         <template x-for="section in data.sections">
             <button @click="selectSection(section.id)"
                 :class="{ 'selected': section.id === selectedSection.id }">
-                <span x-text="section.name"></span>
+                <span x-text="section.name"></span><br>
                 <span x-text="learnedSkillCountForSection(section)"></span>/<span x-text="learnableSkillCountForSection(section)"></span>
             </button>
         </template>
