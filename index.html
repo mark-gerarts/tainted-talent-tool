@@ -41,7 +41,6 @@
             <h2 class="active-skilltree-title text-center" x-text="selectedSkillTree.name"></h2>
             <p class="active-skilltree-level text-center">
                 Required level: <span x-text="requiredLevel"></span>
-                (<span class="clear-all" @click="clearAllSkills()">clear all</span>)
             </p>
             <div x-html="renderSkillTreeToHtml(selectedSkillTree,
             learnedSkills)" class="active-skilltree-svg text-center"></div>
@@ -70,6 +69,7 @@
         target="_blank">
             Tainted Grail: The Fall of Avalon on Steam
         </a>
+        | <span class="clear-all" @click="clearAllSkills()">Reset all</span>
     </footer>
 
     <script type="module" src="src/main.js"></script>
